@@ -48,12 +48,7 @@ async function addEmpleado(req, res, next) {
       apellido2,
       codigo_departamento,
     });
-    // let departamento = await Departamento.findAll({
-    //   where: {
-    //     codigo: codigo_departamento,
-    //   },
-    // });
-    // newEmpleado.addDepartamento(departamento);
+
     res.send(" Empleado registrado con exito");
   } catch (error) {
     next(error);
