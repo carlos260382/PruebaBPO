@@ -3,10 +3,10 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
     "empleado",
+
     {
       codigo: {
         type: DataTypes.BIGINT(10),
-        primaryKey: true,
         allowNull: false,
       },
       nif: {
@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       codigo_departamento: {
-        type: DataTypes.INTEGER(10),
+        type: DataTypes.BIGINT(10),
         allowNull: false,
       },
     },

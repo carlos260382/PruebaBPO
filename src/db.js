@@ -35,10 +35,10 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Empleado, Departamento } = sequelize.models;
+// const { Empleado, Departamento } = sequelize.models;
 
-Departamento.hasMany(Empleado);
-Empleado.belongsTo(Departamento);
+// Departamento.hasMany(Empleado);
+// Empleado.belongsTo(Departamento);
 
 module.exports = {
   ...sequelize.models,

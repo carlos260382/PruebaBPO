@@ -37,7 +37,7 @@ async function addDepartamento(req, res, next) {
 }
 
 async function addEmpleado(req, res, next) {
-  const { codigo, nif, nombre, apellido1, apellido2, codigo_departamento } =
+  const { id, codigo, nif, nombre, apellido1, apellido2, codigo_departamento } =
     req.body;
   try {
     const newEmpleado = await Empleado.create({
@@ -48,13 +48,13 @@ async function addEmpleado(req, res, next) {
       apellido2,
       codigo_departamento,
     });
-    let departamento = await Departamentos.findAll({
-      where: {
-        codigo: codigo_departamento,
-      },
-    });
-    newEmpleado.addDepartamento(departamento);
-    res.send(" Actividad turistica ingresada con exito");
+    // let departamento = await Departamento.findAll({
+    //   where: {
+    //     codigo: codigo_departamento,
+    //   },
+    // });
+    // newEmpleado.addDepartamento(departamento);
+    res.send(" Empleado registrado con exito");
   } catch (error) {
     next(error);
     console.log(`Se produjo el siguiente error ${error}`);
@@ -64,12 +64,38 @@ async function addEmpleado(req, res, next) {
 async function getCodigoEmpleado(req, res, next) {
   try {
     const { codigo } = req.params;
-    const detailEmpleado = await Empleado.findByPk(codigo.toUpperCase(), {
-      include: Departamento,
-    });
-    return res.send(detailEmpleado);
+    console.log("este es codigo", codigo);
+    const detailEmpleado = await Empleado.findByPk(codigo.toUpperCase());
+    return res.status(200).send(detailEmpleado);
   } catch (error) {
     res.status(404).send("Empleado detail not found");
+  }
+}
+
+async function updateEmpleado(req, res) {
+  const { codigo } = req.params;
+  if (codigo) {
+    const body = req.body;
+    Empleado.update(body, {
+      where: {
+        codigo,
+      },
+    })
+      .then(() => {
+        res.send("Modificado correctamente");
+      })
+      .catch((error) => next(error));
+  }
+}
+
+async function deleteEmpleado(req, res) {
+  const { codigo } = req.params;
+  if (codigo) {
+    Empleado.destroy({ where: { codigo } })
+      .then(() => {
+        res.send("Eliminado correctamente");
+      })
+      .catch((error) => res.status(400).send(error));
   }
 }
 
@@ -79,4 +105,6 @@ module.exports = {
   addDepartamento,
   getCodigoEmpleado,
   getEmpleados,
+  updateEmpleado,
+  deleteEmpleado,
 };

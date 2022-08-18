@@ -8,6 +8,8 @@ const {
   addEmpleado,
   getCodigoEmpleado,
   getEmpleados,
+  updateEmpleado,
+  deleteEmpleado,
 } = require("../controllers");
 
 const router = Router();
@@ -17,5 +19,9 @@ router.get("/", getEmpleados);
 router.get("/:codigo", getCodigoEmpleado);
 
 router.post("/", addEmpleado);
+
+router.put("/:codigo", updateEmpleado);
+
+router.delete("/:codigo", deleteEmpleado);
 
 module.exports = router;
